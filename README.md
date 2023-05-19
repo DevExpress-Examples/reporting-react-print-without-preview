@@ -1,18 +1,15 @@
-<!-- default badges list -->
-![](https://img.shields.io/endpoint?url=https://codecentral.devexpress.com/api/v1/VersionRange/274919030/2022.2)
-[![](https://img.shields.io/badge/Open_in_DevExpress_Support_Center-FF7200?style=flat-square&logo=DevExpress&logoColor=white)](https://supportcenter.devexpress.com/ticket/details/T902911)
-[![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
-<!-- default badges end -->
 ## How to Print and Export a Report in a React Application without Displaying the Report
 
 This example prints and exports a report in a browser without previewing it on a web page.
 
-**Print**
+![Screenshot](Images/screenshot.png)
 
-On the **server side**, a controller performs the following actions:
+## Print
+
+On the **server side**, the controller performs the following actions:
 - [creates a report](https://docs.devexpress.com/XtraReports/2440/get-started-with-devexpress-reporting/create-a-report-from-a-to-z);
 - [exports the report to PDF](https://docs.devexpress.com/XtraReports/2574/detailed-guide-to-devexpress-reporting/store-and-distribute-reports/export-reports/export-to-pdf) with the [XtraReport.ExportToPdfAsync](https://docs.devexpress.com/XtraReports/DevExpress.XtraReports.UI.XtraReport.ExportToPdfAsync.overloads) method;
-- send the PDF file back to the client.
+- sends the PDF file back to the client.
 
 On the **client-side**, a user can do one of the following:
 
@@ -22,16 +19,23 @@ Click a button to call the client-side `window.Open(url, "_blank")` method to op
 * Print a report in iFrame. 
 Click a button to load a PDF file in the `HTMLIFrameElement` and print its content.
 
-*NOTE: We don't recommend printing with an invisible iFrame element because it's not guaranteed to work reliably across all browsers.* 
 
-For more information review the following help topic:
-
-* [Web Reporting](https://docs.devexpress.com/XtraReports/9814/create-end-user-reporting-applications/web-reporting)
-
-
-**Export**
+## Export
 
 The user selects the format and clicks a button to send the format to the server-side controller. The controller calls the export method for the selected format and sends the file back to the browser.
 
-For more information review the following help topic:
-*  [Export Reports](https://docs.devexpress.com/XtraReports/1302/detailed-guide-to-devexpress-reporting/store-and-distribute-reports/export-reports).
+## Files to Review
+
+- [HomeComponent.jsx](dxSampleReactReportingPrintWithoutPreview/ClientApp/src/components/HomeComponent.jsx)
+- [HomeController.cs](dxSampleReactReportingPrintWithoutPreview/Controllers/HomeController.cs)
+
+## Documentation
+
+* [Reporting for React](https://docs.devexpress.com/XtraReports/401915/web-reporting/javascript-reporting/react)
+* [Export Reports](https://docs.devexpress.com/XtraReports/1302/detailed-guide-to-devexpress-reporting/store-and-distribute-reports/export-reports)
+
+## More Examples
+
+- [Reporting for Web (React) - Report Designer](https://github.com/DevExpress-Examples/reporting-eud-designer-in-javascript-with-react)
+- [Reporting for Web (React) - Document Viewer](https://github.com/DevExpress-Examples/reporting-document-viewer-in-javascript-with-react)
+- [How to Print and Export a Report in the ASP.NET Core Application without the Document Viewer](https://github.com/DevExpress-Examples/Reporting-AspNetCore-Print-Without-Preview)
