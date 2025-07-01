@@ -9,11 +9,30 @@ This example prints and exports a report in a browser without previewing it on a
 
 ![Screenshot](Images/screenshot.png)
 
-## Export Operations
+## Run the Project 
+
+Run the following command from the *ServerApp* folder: 
+
+```cmd
+dotnet run
+```
+
+Run the following commands from the *react-app* folder: 
+
+```cmd
+npm install
+mpm run dev
+```
+
+Open your browser and navigate to the URL specified in the command output to see the result.
+
+## Implementation Details
+
+### Export Operations
 
 The user selects the format from the drop-down list and clicks the **Export the report** button to send the format to the server-side controller. The controller calls the export method for the selected format and sends the file back to the browser.
 
-## Print Operations
+### Print Operations
 
 On the **server side**, a controller performs the following actions:
 - [creates a report](https://docs.devexpress.com/XtraReports/2440/get-started-with-devexpress-reporting/create-a-report-from-a-to-z)
