@@ -61,13 +61,13 @@ class HomeComponent extends React.Component {
                     <option>PNG</option>
                 </select>
                 <button style={{ margin: "5px" }} onClick={this.downloadFile}>
-                    Export a report
+                    Export the report
                 </button>
                 <button style={{ margin: "5px" }} onClick={this.printInNewWindow} >
-                    Print a report in a new tab
+                    Print the report in a new tab
                 </button>
                 <button style={{ margin: "5px" }} onClick={this.printInIframe} >
-                    Print a report with IFrame
+                    Print the report with IFrame
                 </button>
                 <iframe id="printFrame" name="printFrameName" src="api/Home/Print" title="Print" frameorder="0" width="1" height="1" style={{ position: "absolute", top: "-100px" }} >
                 </iframe>
