@@ -47,7 +47,7 @@ On the **client-side**, a user can do one of the following:
 
 * Print a report in iFrame
 
-    Click the **Print the report in iFrame** button to load a PDF file in the `HTMLIFrameElement` and print its content.
+    Click the **Print via iFrame** button to load a PDF file in the `HTMLIFrameElement` and print its content.
 
 
 ## Files to Review
