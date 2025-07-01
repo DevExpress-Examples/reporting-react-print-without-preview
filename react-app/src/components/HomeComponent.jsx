@@ -6,7 +6,11 @@ export default function HomeComponent() {
 
     const downloadFile = () => {
         fetch(`/api/Home/Export?format=${selectedFormat}`)
-            .then(response => response.blob())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('An error has occurred.');
+                }  
+                return response.blob();})
             .then(data => {
                 saveAs(data, 'TestReport.' + selectedFormat.toLowerCase());
             })
@@ -44,14 +48,14 @@ export default function HomeComponent() {
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                 <select value={selectedFormat} onChange={e => selectedFormat = (e.target.value)}>
                     <option value="PDF">PDF</option>
-                    <option value="RTF">RTF</option>
-                    <option value="XLSX">XLSX</option>
-                    <option value="DOCX">DOCX</option>
-                    <option value="XLS">XLS</option>
-                    <option value="MHT">MHT</option>
                     <option value="HTML">HTML</option>
-                    <option value="CSV">CSV</option>
                     <option value="TXT">TXT</option>
+                    <option value="DOCX">DOCX</option>
+                    <option value="RTF">RTF</option>
+                    <option value="MHT">MHT</option>
+                    <option value="XLSX">XLSX</option>
+                    <option value="XLS">XLS</option>
+                    <option value="CSV">CSV</option>
                     <option value="PNG">PNG</option>
                 </select>
                 <button onClick={downloadFile}>Export the report</button>
