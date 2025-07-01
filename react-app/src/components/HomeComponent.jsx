@@ -3,6 +3,7 @@ import { saveAs } from 'file-saver';
 
 export default function HomeComponent() {
     let selectedFormat = 'PDF';
+    const iframeRef = useRef();
 
     const downloadFile = () => {
         fetch(`/api/Home/Export?format=${selectedFormat}`)
@@ -15,20 +16,20 @@ export default function HomeComponent() {
                 saveAs(data, 'TestReport.' + selectedFormat.toLowerCase());
             })
             .catch(error => {
-            console.error('An error has occurred:', error);
+                console.error('An error has occurred:', error);
         });
     };
 
     const printInNewTab = () => {
         var frameElement = window.open("api/Home/Print", "_blank");
-        frameElement.addEventListener("load", function (e) {
+        frameElement?.addEventListener("load", function (e) {
             if (frameElement.document.contentType !== "text/html")
                 frameElement.print();
         });
     };
 
     const printInIframe = () => {
-        const iframe = document.getElementById('printFrame');
+        const iframe = iframeRef.current;
         if (!iframe) {
             console.error('IFrame not found');
             return;
@@ -62,7 +63,7 @@ export default function HomeComponent() {
                 <button onClick={printInNewTab}>Print the report in new tab</button>
                 <button onClick={printInIframe}>Print via iFrame</button>
             </div>
-                <iframe id="printFrame" name="printFrameName" src="api/Home/Print" title="Print" frameorder="0" width="1" height="1" style={{ position: "absolute", top: "-100px" }} />
+            <iframe ref={iframeRef} name="printFrameName" src="api/Home/Print" title="Print" frameorder="0" width="1" height="1" style={{ position: "absolute", top: "-100px" }} />
         </div>
     );
 }
