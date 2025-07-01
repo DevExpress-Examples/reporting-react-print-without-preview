@@ -1,85 +1,64 @@
-﻿import React from "react";
-import saveAs from "file-saver";
+﻿import React, { useRef, useState } from 'react';
+import { saveAs } from 'file-saver';
 
+export default function HomeComponent() {
+    let selectedFormat = 'PDF';
 
-class HomeComponent extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.selectedFormat = 'pdf';
-        this.printUrl = "";
-
-        this.reportUrl = "TestReport";
-
-        this.onChange = this.onChange.bind(this);
-        this.downloadFile = this.downloadFile.bind(this);
-        this.printInNewWindow = this.printInNewWindow.bind(this);
-        this.printInIframe = this.printInIframe.bind(this);
+    const downloadFile = () => {
+        fetch(`/api/Home/Export?format=${selectedFormat}`)
+            .then(response => response.blob())
+            .then(data => {
+                saveAs(data, 'TestReport.' + selectedFormat.toLowerCase());
+            })
+            .catch(error => {
+            console.error('An error has occurred:', error);
+        });
     };
 
-    onChange(event) {
-        this.selectedFormat = event.target.value;
-    }
-
-    printInNewWindow() {
+    const printInNewTab = () => {
         var frameElement = window.open("api/Home/Print", "_blank");
         frameElement.addEventListener("load", function (e) {
             if (frameElement.document.contentType !== "text/html")
                 frameElement.print();
         });
-    }
+    };
 
-    printInIframe() {
-        var iframe = document.getElementById('printFrame');
-        if (iframe.contentDocument.contentType !== "text/html")
-            iframe.contentWindow.print();
-    }
+    const printInIframe = () => {
+        const iframe = document.getElementById('printFrame');
+        if (!iframe) {
+            console.error('IFrame not found');
+            return;
+        }
+        try {
+            if (iframe.contentDocument?.contentType !== "text/html") {
+                iframe.contentWindow.print();
+            }
+        } catch (error) {
+            console.error('An error has occurred::', error);
+        }
+    };
 
-    downloadFile() {
-        fetch("api/Home/Export?format=" + this.selectedFormat)
-            .then(response => response.blob())
-            .then(data => {
-                saveAs(data, 'TestReport.' + this.selectedFormat.toLowerCase());
-            });
 
-    }
-
-    render() {
-
-        return (                    
-                <div>
-                <select name="exportFormat" onChange={this.onChange}>
-                    <option>PDF</option>
-                    <option>DOCX</option>
-                    <option>XLS</option>
-                    <option>XLSX</option>
-                    <option>RTF</option>
-                    <option>MHT</option>
-                    <option>HTML</option>
-                    <option>TXT</option>
-                    <option>CSV</option>
-                    <option>PNG</option>
+    return (
+        <div style={{ padding: '1rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <select value={selectedFormat} onChange={e => selectedFormat = (e.target.value)}>
+                    <option value="PDF">PDF</option>
+                    <option value="RTF">RTF</option>
+                    <option value="XLSX">XLSX</option>
+                    <option value="DOCX">DOCX</option>
+                    <option value="XLS">XLS</option>
+                    <option value="MHT">MHT</option>
+                    <option value="HTML">HTML</option>
+                    <option value="CSV">CSV</option>
+                    <option value="TXT">TXT</option>
+                    <option value="PNG">PNG</option>
                 </select>
-                <button style={{ margin: "5px" }} onClick={this.downloadFile}>
-                    Export the report
-                </button>
-                <button style={{ margin: "5px" }} onClick={this.printInNewWindow} >
-                    Print the report in a new tab
-                </button>
-                <button style={{ margin: "5px" }} onClick={this.printInIframe} >
-                    Print the report with IFrame
-                </button>
-                <iframe id="printFrame" name="printFrameName" src="api/Home/Print" title="Print" frameorder="0" width="1" height="1" style={{ position: "absolute", top: "-100px" }} >
-                </iframe>
-                </div>
-        );
-    }
-    componentDidMount() {
-
-    }
-    componentWillUnmount() {
-
-    }
-};
-
-export default HomeComponent;
+                <button onClick={downloadFile}>Export the report</button>
+                <button onClick={printInNewTab}>Print the report in new tab</button>
+                <button onClick={printInIframe}>Print via iFrame</button>
+            </div>
+                <iframe id="printFrame" name="printFrameName" src="api/Home/Print" title="Print" frameorder="0" width="1" height="1" style={{ position: "absolute", top: "-100px" }} />
+        </div>
+    );
+}
