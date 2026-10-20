@@ -13,7 +13,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "file-saver": "^2.0.2",
-    "devexpress-reporting-react": "24.2-stable"
+    "devexpress-reporting-react": "26.1-stable"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
